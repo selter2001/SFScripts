@@ -122,7 +122,7 @@ namespace SFMasterYi
             var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             if (target == null) return;
 
-            if (target.IsValidTarget(DFG.Range) && DFG.IsReady())
+            if ( DFG != null && target.IsValidTarget(DFG.Range) && DFG.IsReady())
                 DFG.Cast(target);
             if (target.IsValidTarget(Q.Range) && Q.IsReady())
             {
