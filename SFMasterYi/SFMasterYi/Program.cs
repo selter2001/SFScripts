@@ -102,10 +102,6 @@ namespace SFMasterYi
                 {
                     Q.Cast(jungleMobs);
                 }
-                if (E.IsReady())
-                {
-                    E.Cast();
-                }
             }
         }
 
