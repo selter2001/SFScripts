@@ -15,7 +15,7 @@ namespace SFMasterYi
         public static string ChampName = "MasterYi";
         public static Orbwalking.Orbwalker Orbwalker;
         public static Obj_AI_Base Player = ObjectManager.Player; // Instead of typing ObjectManager.Player you can just type Player
-        public static Spell Q,  E, R;
+        public static Spell Q, W, E, R;
         public static Items.Item DFG;
 
         public static Menu SF;
@@ -41,7 +41,7 @@ namespace SFMasterYi
             //Combo menu
             SF.AddSubMenu(new Menu("Combo", "Combo"));
             SF.SubMenu("Combo").AddItem(new MenuItem("useQ", "Use Q?").SetValue(true));
-            SF.SubMenu("Combo").AddItem(new MenuItem("useW", "Use W?").SetValue(true));
+            SF.SubMenu("Combo").AddItem(new MenuItem("useW", "Use W? (AUTO ATTACK RESET)").SetValue(true));
             SF.SubMenu("Combo").AddItem(new MenuItem("useE", "Use E?").SetValue(true));
             SF.SubMenu("Combo").AddItem(new MenuItem("useR", "Use R?").SetValue(true));
             SF.SubMenu("Combo").AddItem(new MenuItem("ComboActive", "Combo").SetValue(new KeyBind(32, KeyBindType.Press)));
@@ -57,12 +57,23 @@ namespace SFMasterYi
             //Make the menu visible
             SF.AddToMainMenu();
             Q = new Spell(SpellSlot.Q, 600);
+            W = new Spell(SpellSlot.W, Orbwalking.GetRealAutoAttackRange(Player));
             E = new Spell(SpellSlot.E, Orbwalking.GetRealAutoAttackRange(Player));
             R = new Spell(SpellSlot.R, Orbwalking.GetRealAutoAttackRange(Player));
             Drawing.OnDraw += Drawing_OnDraw; // Add onDraw
             Game.OnGameUpdate += Game_OnGameUpdate; // adds OnGameUpdate (Same as onTick in bol)
+            Orbwalking.AfterAttack += Orbwalking_AfterAttack;
 
             Game.PrintChat("SF" + ChampName + " loaded! By iSnorflake");
+        }
+
+        static void Orbwalking_AfterAttack(Obj_AI_Base unit, Obj_AI_Base target)
+        {
+            if (unit.IsMe && Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo && SF.Item("useW").GetValue<bool>() && W.IsReady())
+            {
+                W.Cast();
+                Player.IssueOrder(GameObjectOrder.MoveTo, Player);
+            }
         }
 
         static void Game_OnGameUpdate(EventArgs args)
