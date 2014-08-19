@@ -67,7 +67,7 @@ namespace SFMasterYi
             Game.PrintChat("SF" + ChampName + " loaded! By iSnorflake");
         }
 
-        static void Orbwalking_AfterAttack(Obj_AI_Base unit, Obj_AI_Base target)
+        public static void Orbwalking_AfterAttack(Obj_AI_Base unit, Obj_AI_Base target)
         {
             if (unit.IsMe && Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo && SF.Item("useW").GetValue<bool>() && W.IsReady())
             {
