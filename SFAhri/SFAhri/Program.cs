@@ -11,6 +11,7 @@ using LeagueSharp.Common;
 using SharpDX;
 using Color = System.Drawing.Color;
 #endregion
+// By iSnorflake
 namespace SFAhri
 {
     class Program

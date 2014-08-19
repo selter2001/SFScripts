@@ -9,7 +9,7 @@ using LeagueSharp.Common;
 using System.Drawing;
 using SharpDX;
 using Color = System.Drawing.Color;
-
+// By iSnorflake
 namespace Katarina
 {
     internal class Program
