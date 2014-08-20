@@ -142,10 +142,7 @@ namespace Katarina
                 {
                     if (Vector3.Distance(minion.ServerPosition, ObjectManager.Player.ServerPosition) > Orbwalking.GetRealAutoAttackRange(ObjectManager.Player))
                     {
-                        if (!Config.Item("QNFE").GetValue<bool>())
-                            Q.CastOnUnit(minion, false);
-                        else
-                            Q.CastOnUnit(minion, true);
+                            Q.CastOnUnit(minion, Config.Item("QNFE").GetValue<bool>());
                         return;
                     }
                 }
@@ -172,14 +169,12 @@ namespace Katarina
 
                 if (ObjectManager.Player.Distance(target) < Q.Range && Q.IsReady())
                 {
-                    if(!Config.Item("QNFE").GetValue<bool>())
-                    Q.CastOnUnit(target);
-                    else
-                        Q.CastOnUnit(target,true);
+                                      
+                        Q.CastOnUnit(target,Config.Item("QNFE").GetValue<bool>());
                 }
 
                 if (ObjectManager.Player.Distance(target) < E.Range && E.IsReady() && !Q.IsReady())
-                    E.CastOnUnit(target, true);
+                    E.CastOnUnit(target);
 
                 if (ObjectManager.Player.Distance(target) < W.Range && W.IsReady() && !Q.IsReady())
                     W.Cast();
@@ -219,10 +214,8 @@ namespace Katarina
             {
                 if (Q.IsReady() && hero.Distance(ObjectManager.Player) <= Q.Range && DamageLib.getDmg(hero, DamageLib.SpellType.Q) >= hero.Health)
                 {
-                    if (!Config.Item("QNFE").GetValue<bool>())
-                        Q.CastOnUnit(hero, false);
-                    else
-                        Q.CastOnUnit(hero, true);// Creds to DETUKS - Taught me how to do it. iMeh too for the starting code.
+                    Q.CastOnUnit(hero, Config.Item("QNFE").GetValue<bool>());
+             
                 }
             }
         }
