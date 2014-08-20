@@ -80,20 +80,20 @@ namespace SFTemplate
                 DFG.Cast(target);
             if (target.IsValidTarget(Q.Range) && Q.IsReady())
             {
-                Q.Cast(target, SF.Item("QNFE").GetValue<bool>());
+                Q.Cast(target, SF.Item("NFE").GetValue<bool>());
                 
             }
             if (target.IsValidTarget(W.Range) && W.IsReady())
             {
-                W.Cast(target, SF.Item("QNFE").GetValue<bool>());
+                W.Cast(target, SF.Item("NFE").GetValue<bool>());
             }
             if (target.IsValidTarget(E.Range) && E.IsReady())
             {
-                E.Cast(target, SF.Item("QNFE").GetValue<bool>());
+                E.Cast(target, SF.Item("NFE").GetValue<bool>());
             }
             if (target.IsValidTarget(R.Range) && R.IsReady())
             {
-                R.Cast(target, SF.Item("QNFE").GetValue<bool>());
+                R.Cast(target, SF.Item("NFE").GetValue<bool>());
             }
         }
     }
