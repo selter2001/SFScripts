@@ -57,6 +57,10 @@ namespace SFAhri
             SF.SubMenu("Combo").AddItem(new MenuItem("useW", "Use W?").SetValue(true));
             SF.SubMenu("Combo").AddItem(new MenuItem("useE", "Use E?").SetValue(true));
             SF.SubMenu("Combo").AddItem(new MenuItem("ComboActive", "Combo").SetValue(new KeyBind(32, KeyBindType.Press)));
+            var _harras = new Menu("Harras", "Harras");
+            _harras.AddItem(new MenuItem("useQH","Use Q?").SetValue(true));
+            _harras.AddItem(new MenuItem("HarrasActive","Harras").SetValue(new KeyBind("C".ToCharArray()[0], KeyBindType.Press)));
+            SF.AddSubMenu(_harras);
             //Exploits
             SF.AddItem(new MenuItem("NFE", "No-Face (Normal cast not implemented)").SetValue(true));
             //Make the menu visible
@@ -76,6 +80,10 @@ namespace SFAhri
         {
             if (SF.Item("ComboActive").GetValue<KeyBind>().Active) {
                 Combo();
+            }
+            if (SF.Item("HarrasActive").GetValue<KeyBind>().Active)
+            {
+                Harras();
             }
         }
         #endregion
@@ -99,10 +107,10 @@ namespace SFAhri
                 {
                     if (SF.Item("NFE").GetValue<bool>())
                     {
-                        Game.PrintChat("Casting Q");
+                        //Game.PrintChat("Casting Q");
                         //Spell_Cast_LineSkillshot("Combo", "useQ", Q, SimpleTs.DamageType.Magical);
                         Q.Cast(target, true);
-                        Game.PrintChat("Q Casted");
+                        //Game.PrintChat("Q Casted");
                     }
 
                     else
@@ -132,6 +140,20 @@ namespace SFAhri
                 }
                 
             }
+        #endregion
+
+        #region Harras
+        public static void Harras()
+        {
+            var target = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
+            if (target == null) return;
+
+
+            if (target.IsValidTarget(Q.Range) && Q.IsReady())
+            {
+                Q.Cast(target, SF.Item("NFE").GetValue<bool>());
+            }
+        }
         #endregion
 
         #region GetDamage
