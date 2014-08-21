@@ -134,12 +134,12 @@ namespace SFMasterYi
             if (target.IsValidTarget(Q.Range) && Q.IsReady())
             {
 
-                Q.Cast(target, SF.Item("QNFE").GetValue<bool>());
+                Q.Cast(target, SF.Item("NFE").GetValue<bool>());
                 
             }
             if (target.IsValidTarget(E.Range) && E.IsReady())
             {
-                E.Cast(target, SF.Item("QNFE").GetValue<bool>());
+                E.Cast(target, SF.Item("NFE").GetValue<bool>());
             }
         }
     }

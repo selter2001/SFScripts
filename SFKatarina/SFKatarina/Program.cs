@@ -85,6 +85,11 @@ namespace Katarina
                 .AddItem(
                     new MenuItem("FreezeActive", "Freeze!").SetValue(
                         new KeyBind("C".ToCharArray()[0], KeyBindType.Press)));
+            var _waveclear = new Menu("Waveclear", "WaveclearMenu");
+            _waveclear.AddItem(new MenuItem("useQW", "Use Q?").SetValue(true));
+            _waveclear.AddItem(new MenuItem("useWW", "Use W?").SetValue(true));
+            _waveclear.AddItem(new MenuItem("Waveclear","Waveclear").SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
+            Config.AddSubMenu(_waveclear); // Thanks to ChewyMoon for the idea of doing the menu this way
 
             // Misc
             Config.AddSubMenu(new Menu("Misc", "Misc"));
@@ -97,6 +102,7 @@ namespace Katarina
             Config.AddSubMenu(new Menu("Exploits", "Exploits"));
             Config.SubMenu("Exploits").AddItem(new MenuItem("QNFE", "Q No-Face").SetValue(true));
             // Config.SubMenu("Drawings").AddItem(new MenuItem("ERange", "E Range").SetValue(new Circle(true, Color.FromArgb(150, Color.DodgerBlue))));
+            
             Config.AddToMainMenu();
             //Add the events we are going to use
             Game.OnGameUpdate += Game_OnGameUpdate;
@@ -126,6 +132,10 @@ namespace Katarina
                 Killsteal();
             if (Config.Item("FreezeActive").GetValue<KeyBind>().Active)
                 Farm();
+            if (Config.Item("Waveclear").GetValue<KeyBind>().Active)
+            {
+                WaveClear();
+            }
             escape();
         }
         private static void Farm()
@@ -154,6 +164,28 @@ namespace Katarina
                     W.Cast();
                     return;
                
+            }
+        }
+        public static void WaveClear()
+        {
+            if (!Orbwalking.CanMove(40)) return;
+            
+            var allMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range);
+            var useQ = Config.Item("useQW").GetValue<bool>();
+            var useW = Config.Item("useWW").GetValue<bool>();
+            if (useQ && Q.IsReady())
+            {
+                foreach (var minion in allMinions.Where(minion => minion.IsValidTarget(Q.Range)))
+                {
+                    Q.CastOnUnit(minion, Config.Item("QNFE").GetValue<bool>());
+                    return;
+                }
+            }
+            else if (useW && W.IsReady())
+            {
+                if (!allMinions.Any(minion => minion.IsValidTarget(W.Range))) return;
+                W.Cast();
+                return;
             }
         }
         private static void Combo()
