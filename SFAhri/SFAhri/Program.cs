@@ -40,8 +40,8 @@ namespace SFAhri
             W = new Spell(SpellSlot.W, 800);
             E = new Spell(SpellSlot.E, 975);
 
-            Q.SetSkillshot(0.50f, 100f, 1100f, false, Prediction.SkillshotType.SkillshotLine);
-            E.SetSkillshot(0.50f, 60f, 1200f, true, Prediction.SkillshotType.SkillshotLine);
+            Q.SetSkillshot(0.50f, 100f, 1100f, false, SkillshotType.SkillshotLine);
+            E.SetSkillshot(0.50f, 60f, 1200f, true, SkillshotType.SkillshotLine);
             //Base menu
             SF = new Menu("SFAhri", Name, true);
             //Orbwalker and menu
