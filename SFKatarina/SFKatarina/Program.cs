@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿        #region References
+        using System;
+        using System.Collections.Generic;
+        using System.Linq;
+        using System.Text;
+        using System.Threading.Tasks;
 
-using LeagueSharp;
-using LeagueSharp.Common;
-using System.Drawing;
-using SharpDX;
-using Color = System.Drawing.Color;
-// By iSnorflake
-namespace Katarina
-{
-    internal class Program
-    {
+        using LeagueSharp;
+        using LeagueSharp.Common;
+        using System.Drawing;
+        using SharpDX;
+        using Color = System.Drawing.Color;
+        // By iSnorflake
+        namespace Katarina
+        {
+            internal class Program
+            {
+        #endregion
+
+        #region Declares
         public static string ChampionName = "Katarina";
 
         //Orbwalker instance
@@ -35,7 +39,9 @@ namespace Katarina
         {
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
         }
+        #endregion
 
+        #region OnGameLoad
         private static void Game_OnGameLoad(EventArgs args)
         {
 
@@ -111,7 +117,9 @@ namespace Katarina
 
 
         }
+        #endregion
 
+        #region OnGameUpdate
         private static void Game_OnGameUpdate(EventArgs args)
         {
             if (Player.IsDead) return;
@@ -138,6 +146,9 @@ namespace Katarina
             }
             escape();
         }
+        #endregion
+
+        #region Farm
         private static void Farm()
         {
             if (!Orbwalking.CanMove(40)) return;
@@ -166,10 +177,13 @@ namespace Katarina
                
             }
         }
+        #endregion
+
+        #region WaveClear
         public static void WaveClear()
         {
             if (!Orbwalking.CanMove(40)) return;
-            
+
             var allMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range);
             var useQ = Config.Item("useQW").GetValue<bool>();
             var useW = Config.Item("useWW").GetValue<bool>();
@@ -188,6 +202,9 @@ namespace Katarina
                 return;
             }
         }
+        #endregion
+
+        #region Combo
         private static void Combo()
         {
             Orbwalker.SetAttacks(true);
@@ -229,6 +246,9 @@ namespace Katarina
                     W.Cast();
             }
         }
+        #endregion
+
+        #region OnDraw
         private static void Drawing_OnDraw(EventArgs args)
         {
             foreach (var spell in SpellList)
@@ -240,6 +260,9 @@ namespace Katarina
                 
             }
         }
+        #endregion
+
+        #region Killsteal
         private static void Killsteal() // Creds to TC-Crew
         {
             foreach (var hero in ObjectManager.Get<Obj_AI_Hero>().Where(hero => hero.IsValidTarget(Q.Range)))
@@ -251,6 +274,9 @@ namespace Katarina
                 }
             }
         }
+        #endregion
+
+        #region Escape
         private static void escape()
         {
             if (Config.Item("Escape").GetValue<KeyBind>().Active)
@@ -270,6 +296,9 @@ namespace Katarina
             }
             }
         }
+        #endregion
+
+        #region GetDamage
         private static double GetDamage(Obj_AI_Base unit) // Creds to TC-Crew
         {
             double damage = 0;
@@ -289,3 +318,4 @@ namespace Katarina
 
     }
 }
+        #endregion
