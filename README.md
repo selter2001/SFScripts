@@ -1,5 +1,8 @@
 SFScripts
 =========
+###THIS REPO HAS SHUT DOWN
+See SFScriptsv2 for my new assemblys.
+
 ###SFKatarina
 The best katarina script on the market for League#
 
